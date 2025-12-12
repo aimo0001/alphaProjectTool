@@ -1,10 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
+  <title>Rapport - Projekter</title>
+  <link rel="stylesheet" th:href="@{/css/main.css}">
 </head>
 <body>
+<h1>Projektoversigt</h1>
 
+<p><a th:href="@{/projects}">&larr; Tilbage til projekter</a></p>
+
+<table border="1">
+  <h2>Graf – estimeret vs. registreret tid</h2>
+  <canvas id="hoursChart" width="600" height="300"></canvas>
+  <thead>
+  <tr>
+    <th>Projekt</th>
+    <th>Kunde</th>
+    <th>Estimerede timer (sum)</th>
+    <th>Registrerede timer</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="s : ${summaries}"
+      th:attr="data-name=${s.project.name},
+               data-est=${s.estimatedHours},
+               data-actual=${s.actualHours}">
+    <td th:text="${s.project.name}"></td>
+    <td th:text="${s.project.client}"></td>
+    <td th:text="${s.estimatedHours}"></td>
+    <td th:text="${s.actualHours}"></td>
+  </tr>
+
+  </tbody>
+</table>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script th:src="@{/js/main.js}"></script>
 </body>
 </html>
